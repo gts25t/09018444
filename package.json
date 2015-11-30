@@ -1,0 +1,31 @@
+{
+  "name": "tanks",
+  "version": "0.0.1",
+  "description": "Pushing Box2D objects to a webpage for multiple users",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gts25t/09018444.git"
+  },
+  "keywords": [
+    "nodejs",
+    "socker",
+    "io",
+    "box2d",
+    "canvas"
+  ],
+  "author": "Simon Armstrong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gts25t/09018444/issues"
+  },
+  "homepage": "https://github.com/gts25t/09018444#readme",
+  "dependencies": {
+    "box2dweb-commonjs": "^2.1.0",
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  }
+}
