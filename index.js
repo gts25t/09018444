@@ -107,6 +107,55 @@ function createBullet(x, y, width, height, angle) {
 
 	return a;
 }
+/*
+function wallSetup(x, y, width, height, static, circle, angle){
+	var internalWallDefs = new Array(
+	    {8,220,8,220, true}, //1 left top 
+        {220,8,220,8, true},   //2 top left 
+        {780,8,220,8, true},      //3 
+	    {992,220,8,220, true}, //4 
+        
+        {250,116,8,100, true},   //5 
+        {470,150,100,8, true},      //6 
+	    {700,200,8,100, true}, //7
+        {850,325,8,150, true},   //8
+        {125,500,8,100, true},      //9 
+	    {378,258,8,100, true}, //10 
+        {500,470,50,8, true},   //11 
+        {742,550,100,8, true},      //12
+        
+	    {850,625,8,150, true}, //13
+        
+        {306,366,80,8, true},   //14
+        {330,600,8,100, true},      //15
+	    {992,780,8,220, true}, //16
+        {8,780,8,220, true},   //17
+        {270,860,100,8, true},  //18
+        
+	    {568,884,8,100, true}, //19
+        
+        {220,992,220,8, true},   //20
+        {780,992,220,8, true}
+     );     //right
+   var internalWall = new Array();
+   for (var i = 0; i <internalWallDefs.length; i++) {
+        var internalWallDef = new b2BodyDef;
+        internalWallDef.type = b2Body.b2_staticBody;
+        internalWallDef.position.Set(internalWallDefs[i].x, internalWallDefs[i].y);
+        var newWall = world.CreateBody(internalWallDef)
+        var internalWallFixture = new b2FixtureDef;
+        internalWallFixture.density = 10.0;
+        internalWallFixture.friction = 0.5;
+        internalWallFixture.restitution = 0;
+        internalWallFixture.shape = new b2PolygonShape;
+        internalWallFixture.shape.SetAsBox(internalWallDefs[i].w, internalWallDefs[i].h);
+        newWall.CreateFixture(internalWallFixture);
+        internalWall.push(newWall);
+        var internal = world.CreateBody(internalWallDef).CreateFixture(internalWallFixture);
+        internal.GetBody().SetUserData({id: "internal"});
+     //   console.log(internal);
+   }
+}*/
 /* End 12 */
 
 var move = false; //See 9
@@ -179,25 +228,39 @@ function init(connections) {
 		true
 		);
 
+
 	//console.log(connections);
 /* Start 3 */
 createDOMObjects(100, 100, size, false, connections[0].id, 0);
-createDOMObjects(400, 100, size, false, connections[1].id, 0);
+createDOMObjects(600, 800, size, false, connections[1].id, 0);
 /* End 3 */
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
-createDOMObjects(Math.random()*(w-size), Math.random()* (h-size), size, Math.random() > 0.5);
 
-createBox(0, 0, w, 1/SCALE, true);
-createBox(0, h, w, 1/SCALE, true);
-createBox(0, 0, 1/SCALE, h, true);
-createBox(w, 0, 1/SCALE, h, true);
+
+createBox(0, 0, w, 5, true);
+createBox(0, h, w, 5, true);
+createBox(0, 0, 5, h, true);
+createBox(w, 0, 5, h, true);
+createBox(8, 220, 8, 220, true);  //1 left top 
+createBox(220, 8, 220, 8, true);   //2 top left 
+createBox(780, 8, 220, 8, true);   //3 
+createBox(992, 220, 8, 220, true); //4 
+createBox(250, 116, 8, 100, true);   //5 
+createBox(470, 150, 100, 8, true);      //6 
+createBox(700, 200, 8, 100, true); //7
+createBox(850, 325, 8, 150, true);   //8
+createBox(125, 500, 8, 100, true);      //9 
+createBox(378, 258, 8, 100, true); //10 
+createBox(500, 470, 50, 8, true);   //11 
+createBox(742, 550, 100, 8, true);      //12
+createBox(850, 625, 8, 150, true); //13
+createBox(306, 366, 80, 8, true);   //14
+createBox(330, 600, 8, 100, true);      //15
+createBox(992, 780, 8, 220, true); //16
+createBox(8, 780, 8, 220, true);   //17
+createBox(270, 860, 100, 8, true);  //18
+createBox(568, 884, 8, 100, true); //19
+createBox(220, 992, 220, 8, true);   //20
+createBox(780, 992, 220, 8, true); //21
 
 	interval = setInterval(function() {
 		update(connections);

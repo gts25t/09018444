@@ -4,7 +4,7 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
-	<h1>Tanks</h2>
+	<h1></h2>
 	</body>
 	
 	<div id="splash"></div>
@@ -16,8 +16,8 @@
 	
 	<script>
 		$('#container').hide();
-		var translateX = -450;
-		var translateY = -250;
+	//	var translateX = -450;
+	//	var translateY = -250;
 		$('#canvas').animate({left: translateX, top: translateY});
 	</script>
 	<script>
@@ -40,13 +40,14 @@
 		});
 
 		socket.on('player_signup', function (data) {
-			if (data.no_of_players < 2) {
-				players = (2-data.no_of_players);
-				$('#splash').append('<h3>We need ' + players + ' more players</h3>');
-			} else {
+			 if (data.no_of_players >= 2){
 				$('#splash').hide();
 				$('#container').show();
+			 } else {
+				players = (2-data.no_of_players);
+				$('#splash').append('<h3>We need ' + players + ' more players</h3>');
 			}
+
 		});
 	</script>
 	<script src="js/index.js"></script>
