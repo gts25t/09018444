@@ -215,7 +215,6 @@ function init(connections) {
 /* Start 3 */
 createDOMObjects(100, 100, size, false, connections[0].id, 0);
 createDOMObjects(600, 800, size, false, connections[1].id, 0);
-createDOMObjects(500, 400, size, false, connections[2].id, 0);
 /* End 3 */
 
 
