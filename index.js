@@ -52,7 +52,7 @@ function createDOMObjects(x, y, size, circle, user, angle) {
 		var body = createBullet(x, y, width, height, angle);
 		body.m_userData = {domObj:domObj, width:width, height:height, circle: circle ? true : false, setup: true};
 	} else {
-		var body = createBox(x, y, width, height, false, circle);
+		var body = wallSetup(x, y, width, height, false, circle);
 		body.m_userData = {domObj:domObj, width:width, height:height, circle: circle ? true : false, setup: true};
 	}
 }
@@ -218,10 +218,10 @@ createDOMObjects(600, 800, size, false, connections[1].id, 0);
 /* End 3 */
 
 
-createBox(0, 0, w, 5, true);
-createBox(0, h, w, 5, true);
-createBox(0, 0, 5, h, true);
-createBox(w, 0, 5, h, true);
+createBox(0, 0, w, 1, true);
+createBox(0, h, w, 1, true);
+createBox(0, 0, 1, h, true);
+createBox(w, 0, 1, h, true);
 
 wallSetup(8, 220, 8, 220, true);  //1 left top 
 wallSetup(220, 8, 220, 8, true);   //2 top left 
