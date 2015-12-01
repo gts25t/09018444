@@ -52,7 +52,7 @@ function createDOMObjects(x, y, size, circle, user, angle) {
 		var body = createBullet(x, y, width, height, angle);
 		body.m_userData = {domObj:domObj, width:width, height:height, circle: circle ? true : false, setup: true};
 	} else {
-		var body = wallSetup(x, y, width, height, false, circle);
+		var body = createBox(x, y, width, height, false, circle);
 		body.m_userData = {domObj:domObj, width:width, height:height, circle: circle ? true : false, setup: true};
 	}
 }
@@ -215,6 +215,7 @@ function init(connections) {
 /* Start 3 */
 createDOMObjects(100, 100, size, false, connections[0].id, 0);
 createDOMObjects(600, 800, size, false, connections[1].id, 0);
+createDOMObjects(500, 400, size, false, connections[2].id, 0);
 /* End 3 */
 
 
