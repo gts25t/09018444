@@ -3,35 +3,6 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Box2D = require('box2dweb-commonjs').Box2D;
-
-// catch 404 errors then forward to handler
-app.use(function(req, res, next){
-	var err = new Error('Not Found');
-	err.status = 404;
-	next(err);
-});
-
-// development error handler
-// will print stacktrace
-if (app.get('env')=== 'development') {
-	app.use(function(err,req,res,next){
-		res.status(err.status || 500);
-		res.render('error', {
-			message: err.message,
-			error: err
-		});
-	});
-}
-
-//production error handler
-// no stacktraces leaked to user
-app.use(function(err,req,res,next){
-	res.status(err.status || 500);
-	res.render('error', {
-		message: err.message,
-		error: {}
-	});
-});
  
 
 var connections = [];
@@ -245,6 +216,8 @@ function init(connections) {
 /* Start 3 */
 createDOMObjects(100, 100, size, false, connections[0].id, 0);
 createDOMObjects(600, 800, size, false, connections[1].id, 0);
+createDOMObjects(400, 400, size, false, connections[2].id, 0);
+createDOMObjects(600, 800, size, false, connections[3].id, 0);
 /* End 3 */
 
 
@@ -316,7 +289,7 @@ http.listen(8000, function() {
 		/* End 1  */
 		/* Start 2 */
 		io.sockets.emit('player_signup', {no_of_players: connections.length});
-		if (connections.length == 2) {
+		if (connections.length == 4) {
 			init(connections);
 		}
 		/* End 2 */
