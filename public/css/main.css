@@ -6,16 +6,16 @@
 }
 
 #canvas {
-        -webkit-transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 	-o-transform: translateZ(0);
-        -moz-transform: translateZ(0);
+    -moz-transform: translateZ(0);
 	-ms-transform: translateZ(0);
 	transform: translateZ(0);
 	background-color:black;
-	position: absolute;
-	width: 1100px;
-	height: 1100px;
-	/*transform: translate(-450px, -250px);*/
+	/*position: absolute;*/
+	width: 1400px;
+	height: 1400px;
+	/*transform: translate(-500px, -500px);*/
 }
 
 .objects {
@@ -26,21 +26,27 @@
 }
 
 #container {
-	width: 1100px;
-	height: 1100px;
+	width: 1400px;
+	height: 1400px;
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
 	position: relative;
 }
 #splash {
-	width: 1100px;
-	height: 1100px;
+	width: 1400px;
+	height: 1400px;
 	padding: 0;
 	margin: 0;
 	position: relative;
 	background-color:black;*/
 }
 h3 {
+	color:#fff;
+}
+body,div, a {
+	margin:0;
+	padding:0;
+	border:none;
 	color:#fff;
 }
