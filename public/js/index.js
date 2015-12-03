@@ -33,6 +33,10 @@ function onKeydown(e) {
 	if (e.keyCode == 39) {
 		right = true;
 		keyChange = true;
+		if (newTranslateX < 450) {
+			newTranslateX = newTranslateX-10;
+			$('#canvas').css('transform', 'translate(' + newTranslateX + 'px, ' + newTranslateY + 'px)');
+		}
 	}
 	if (e.keyCode == 38) {
 		up = true;
@@ -45,6 +49,10 @@ function onKeydown(e) {
 	if (e.keyCode == 40) {
 		down = true;
 		keyChange = true;
+		if (newTranslateY < 250) {
+			newTranslateY = newTranslateY-10;
+			$('#canvas').css('transform', 'translate(' + newTranslateX + 'px, ' + newTranslateY + 'px)');
+		}
 	}
 	if (e.keyCode == 32) {
 		fire = true;

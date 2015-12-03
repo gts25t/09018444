@@ -129,16 +129,14 @@ function createBullet(x, y, width, height, angle) {
     var fixDef = new b2FixtureDef;
     fixDef.density = 1.5;
     fixDef.friction = 0.01;
-    fixDef.restitution = 1;
+    fixDef.restitution = .5;
 
     var circleShape = new b2CircleShape;
     circleShape.m_radius = width/SCALE;
-
     fixDef.shape = circleShape;
 
     a = world.CreateBody(bodyDef).CreateFixture(fixDef);
     a.GetBody().ApplyImpulse(new b2Vec2(Math.cos(angle)*1, Math.sin(angle)*1), a.GetBody().GetWorldCenter());
-
 
     return a;
 }
@@ -222,9 +220,9 @@ function init(connections) {
     //console.log(connections);
 /* Start 3 */
 createDOMObjects(100, 100, size/2, size/2, false, connections[0].id, 0);
-createDOMObjects(900, 100, size/2, size/2, false, connections[1].id, 0);
-createDOMObjects(100, 900, size/2, size/2, false, connections[2].id, 0);
-createDOMObjects(900, 900, size/2, size/2, false, connections[3].id, 0);
+createDOMObjects(151, 100, size/2, size/2, false, connections[1].id, 0);
+//createDOMObjects(100, 900, size/2, size/2, false, connections[2].id, 0);
+//createDOMObjects(900, 900, size/2, size/2, false, connections[3].id, 0);
 /* End 3 */
 
 
@@ -289,13 +287,32 @@ createDOMObjects(550, 992, 450, 8, false, "wall"); //21
         BA = contact.GetFixtureB().m_userData
         AB = contact.GetFixtureA().GetBody().GetUserData();
         BB = contact.GetFixtureB().GetBody().GetUserData();
+        
+        //console.log("A", contact.GetFixtureA().m_userData)
+       // console.log("B", contact.GetFixtureB().m_userData)
+            //        console.log("1AA", AA.domObj.id)
+            //        console.log("BB", BB, contact.GetFixtureB().m_userData)
         if ((AA != null && BB != null)) {
+            console.log("2A", AA.domObj.id, + " - " + "B", BA)
+            console.log("3A", AA.domObj.id,  + " - " + "B", BA.domObj.id)
             if (AA.domObj.id == "bullet" && BB.id == "boundary") {
-                //console.log("Destroy")
+         //   console.log("3A", contact.GetFixtureA().m_userData + " - " + "B", contact.GetFixtureB().m_userData)
                 destroy_list.push(contact.GetFixtureA().GetBody());
             }
         } else if ((BA != null && AB != null)) {
             if (BA.domObj.id == "bullet" && AB.id == "boundary") {
+              //  console.log(AB + " - " + BB)
+                destroy_list.push(contact.GetFixtureB().GetBody())
+            }
+        }
+        if ((AA != null && BA != null)) {
+            if (AA.domObj.id == "bullet"  && BA.domObj.id == this.id) {
+                console.log("playerById(this.id))", playerById(this.id))
+          //      console.log("this.id", this.id)
+                destroy_list.push(contact.GetFixtureA().GetBody());
+            }
+        } else if ((BA != null && AA != null)) {
+            if (BA.domObj.id == "bullet" && AA.domObj.id == this.id ) {
                 //console.log("Destroy");
                 destroy_list.push(contact.GetFixtureB().GetBody())
             }
@@ -308,7 +325,12 @@ createDOMObjects(550, 992, 450, 8, false, "wall"); //21
 
 app.use(express.static('public'));
 app.use('/js', express.static(__dirname + 'public/js'));
+app.use('/js', express.static(__dirname + 'public/user'));
 app.use('/css', express.static(__dirname + 'public/css'));
+
+// usernames which are currently connected
+var usernames = {};
+var numUsers = 0;
 
 http.listen(8000, function() {
     console.log('listening on *:8000');
@@ -356,7 +378,7 @@ function playerById(id) {
 function onMovePlayer(data) {
     var movePlayer = playerById(this.id);
     
-    //console.log(this.id);
+    console.log("this.id", this.id);
 
     var velocity = 1;
     var v_x = Math.cos(bodies[this.id].GetAngle())*velocity;
@@ -372,7 +394,7 @@ function onMovePlayer(data) {
         bodies[this.id].SetLinearVelocity(new b2Vec2(v_x, v_y));
     }
     if (data.down) {
-        //TODO: go backwards like above
+        bodies[this.id].SetLinearVelocity(new b2Vec2(v_y, v_x));
     }
     if (data.fire) {
         spawn(bodies[this.id].GetPosition().x*SCALE, bodies[this.id].GetPosition().y*SCALE, bodies[this.id].GetAngle()); //12
