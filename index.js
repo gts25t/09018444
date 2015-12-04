@@ -328,13 +328,35 @@ app.use('/js', express.static(__dirname + 'public/js'));
 app.use('/js', express.static(__dirname + 'public/user'));
 app.use('/css', express.static(__dirname + 'public/css'));
 
-// usernames which are currently connected
-var usernames = {};
-var numUsers = 0;
-
 http.listen(8000, function() {
     console.log('listening on *:8000');
     io.on('connection', function (socket) {
+
+    // Initialize varibles
+
+    var usernames;
+    var numUsers = 0;
+    var usernameInput = ('.usernameInput'); // Input for username
+    var loginPage = ('.login.page'); // The login page
+    var gamePage = ('.game.page'); // The gameroom page
+    
+  
+  // Sets username
+    function setUsername () {
+        username = cleanInput(usernameInput.val().trim());
+
+        // username valid
+        if (username) {
+            $loginPage.fadeOut();
+            $gamePage.show();
+            $loginPage.off('click');
+
+        socket.emit('add user', username);
+    }
+  }    
+
+  
+
         connections.push(socket);
         /* Start 1 */
         console.log("Player", connections.length, "has connected");
@@ -411,4 +433,3 @@ function onMovePlayer(data) {
 function spawn(x, y, angle) {
     createDOMObjects(x, y, 10/2, 10/2, true, "bullet", angle);
 }
-

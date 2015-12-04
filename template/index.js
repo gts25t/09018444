@@ -102,6 +102,7 @@ var CANVAS_HEIGHT = 1000;
 var SCALE = 30; // recommended
 
 var destroy_list = [];
+var health = 100;
 
 var surroundDef = new Array(
 	    {x:CANVAS_WIDTH/SCALE,y:CANVAS_HEIGHT/SCALE,w:CANVAS_WIDTH/SCALE,h:1/SCALE}, //bottom
@@ -373,18 +374,35 @@ function removeObjectScheduleRemoval(){
 }
 
 */
+var c = document.getElementById("health");
+var ctx = context;
+ctx.font="20px serif";
+ctx.fillStyle="#00000";
+ctx.fillText("Health: "+ health, 10, 40);
+
 var listener = new Box2D.Dynamics.b2ContactListener;
 
 listener.BeginContact = function(contact) {
 
        if (contact.GetFixtureA().GetBody().GetUserData() != null && contact.GetFixtureB().GetBody().GetUserData() != null) {
-        if ((contact.GetFixtureA().GetBody().GetUserData().id == "user1" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user2" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user3" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user4" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "surround" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") )  {
+        if ((contact.GetFixtureA().GetBody().GetUserData().id == "user1" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user2" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user3" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user4" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")){
+            health --;
+            if (health == 0) {
+               destroy_list.push(contact.GetFixtureA().GetBody()); 
+            }
+        }
+        if ((contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "surround" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "user1")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "user2")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "user3")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "user4"))  {
 	    destroy_list.push(contact.GetFixtureA().GetBody());
         console.log(contact.GetFixtureA().GetBody().GetUserData().id + " - " + contact.GetFixtureB().GetBody().GetUserData().id);
   //  console.log(contact);      
-         
-       }
-       if ((contact.GetFixtureA().GetBody().GetUserData().id == "user1" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user2" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user3" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user4" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "surround" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")) {
+        }
+       if ((contact.GetFixtureA().GetBody().GetUserData().id == "user1" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user2" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user3" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user4" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")){
+            health --;
+            if (health == 0) {
+                destroy_list.push(contact.GetFixtureA().GetBody()); 
+            }
+        }
+       if ((contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user1" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user2" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user3" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user4" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "surround" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")) {
 	    destroy_list.push(contact.GetFixtureB().GetBody());
         console.log(contact.GetFixtureA().GetBody().GetUserData().id + " - " + contact.GetFixtureB().GetBody().GetUserData().id);
        }
