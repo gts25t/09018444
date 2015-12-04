@@ -354,9 +354,6 @@ http.listen(8000, function() {
         socket.emit('add user', username);
     }
   }    
-
-  
-
         connections.push(socket);
         /* Start 1 */
         console.log("Player", connections.length, "has connected");

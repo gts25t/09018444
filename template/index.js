@@ -126,7 +126,7 @@ var surroundDef = new Array(
         walls.push(newWall);
         var surround = world.CreateBody(wallDef).CreateFixture(wallFixture);
         surround.GetBody().SetUserData({id: "surround"});
-        console.log(surround);
+     //   console.log(surround.GetBody().GetUserData());
    }
 var internalWallDefs = new Array(
 	    {x:8/SCALE,y:220/SCALE,w:8/SCALE,h:220/SCALE}, //1 left top 
@@ -173,7 +173,7 @@ var internalWallDefs = new Array(
         internalWall.push(newWall);
         var internal = world.CreateBody(internalWallDef).CreateFixture(internalWallFixture);
         internal.GetBody().SetUserData({id: "internal"});
-       console.log(internal.GetBody().GetUserData());
+   //    console.log(internal.GetBody().GetUserData());
    }
 
 var fixDef = new b2FixtureDef;
@@ -190,7 +190,7 @@ fixDef.shape = new b2PolygonShape;
 fixDef.shape.SetAsBox((50/SCALE)/2, (50/SCALE)/2);
 var user = world.CreateBody(bodyDefUser).CreateFixture(fixDef);
 user.GetBody().SetUserData({id: "user1"});
-console.log(user.GetBody().GetUserData());
+//console.log(user.GetBody().GetUserData());
          
 var bodyDefUser = new b2BodyDef;
 bodyDefUser.type = b2Body.b2_dynamicBody;
@@ -200,7 +200,7 @@ fixDef.shape = new b2PolygonShape;
 fixDef.shape.SetAsBox((50/SCALE)/2, (50/SCALE)/2);
 var user = world.CreateBody(bodyDefUser).CreateFixture(fixDef);
 user.GetBody().SetUserData({id: "user2"});
-console.log(user.GetBody().GetUserData());
+//console.log(user.GetBody().GetUserData());
 
 var bodyDefUser = new b2BodyDef;
 bodyDefUser.type = b2Body.b2_dynamicBody;
@@ -210,7 +210,7 @@ fixDef.shape = new b2PolygonShape;
 fixDef.shape.SetAsBox((50/SCALE)/2, (50/SCALE)/2);
 var user = world.CreateBody(bodyDefUser).CreateFixture(fixDef);
 user.GetBody().SetUserData({id: "user3"});
-console.log(user.GetBody().GetUserData());
+//console.log(user.GetBody().GetUserData());
 
 var bodyDefUser = new b2BodyDef;
 bodyDefUser.type = b2Body.b2_dynamicBody;
@@ -220,7 +220,7 @@ fixDef.shape = new b2PolygonShape;
 fixDef.shape.SetAsBox((50/SCALE)/2, (50/SCALE)/2);
 var user = world.CreateBody(bodyDefUser).CreateFixture(fixDef);
 user.GetBody().SetUserData({id: "user4"});
-console.log(user.GetBody().GetUserData());
+//console.log(user.GetBody().GetUserData());
 
 //==================================================
 /*
@@ -355,15 +355,16 @@ function fire(){
     bodyDefBullet.position.y = (user.GetBody().GetPosition().y + 1*Math.sin(user.GetBody().GetAngle()));
     var bullet = world.CreateBody(bodyDefBullet).CreateFixture(fixDef);
     bullet.GetBody().SetUserData({id: "bullet"});
-    console.log(bullet.GetBody().GetUserData())
+//    console.log(bullet.GetBody().GetUserData())
     velocity = 1;
     bullet.GetBody().ApplyImpulse(new b2Vec2(velocity*Math.cos(user.GetBody().GetAngle()), velocity*Math.sin(user.GetBody().GetAngle())), bullet.GetBody().GetWorldCenter());
+
 
 }
 /*
 window.setInterval(removeObjectScheduleRemoval, 1000/90);
 var bulletScheduleRemoval = array();
-var index = -1;
+var index = -1; 
 function removeObjectScheduleRemoval(){
     for (var i = 0; i <= index; i++){
         world.DestroyBody(bulletScheduleRemoval[i]);
@@ -371,9 +372,11 @@ function removeObjectScheduleRemoval(){
     }
     bulletScheduleRemoval = array();
     index = -1
-}
 
+}
 */
+
+
 var c = document.getElementById("health");
 var ctx = context;
 ctx.font="20px serif";
@@ -393,7 +396,7 @@ listener.BeginContact = function(contact) {
         }
         if ((contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "surround" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "user1")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "user2")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "user3")||(contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "user4"))  {
 	    destroy_list.push(contact.GetFixtureA().GetBody());
-        console.log(contact.GetFixtureA().GetBody().GetUserData().id + " - " + contact.GetFixtureB().GetBody().GetUserData().id);
+   //     console.log(contact.GetFixtureA().GetBody().GetUserData().id + " - " + contact.GetFixtureB().GetBody().GetUserData().id);
   //  console.log(contact);      
         }
        if ((contact.GetFixtureA().GetBody().GetUserData().id == "user1" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user2" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet") ||(contact.GetFixtureA().GetBody().GetUserData().id == "user3" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user4" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")){
@@ -404,8 +407,9 @@ listener.BeginContact = function(contact) {
         }
        if ((contact.GetFixtureA().GetBody().GetUserData().id == "bullet" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user1" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user2" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user3" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "user4" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")||(contact.GetFixtureA().GetBody().GetUserData().id == "surround" && contact.GetFixtureB().GetBody().GetUserData().id == "bullet")) {
 	    destroy_list.push(contact.GetFixtureB().GetBody());
-        console.log(contact.GetFixtureA().GetBody().GetUserData().id + " - " + contact.GetFixtureB().GetBody().GetUserData().id);
+  //      console.log(contact.GetFixtureA().GetBody().GetUserData().id + " - " + contact.GetFixtureB().GetBody().GetUserData().id);
        }
+    
     }
     
 listener.EndContact = function(contact) {
