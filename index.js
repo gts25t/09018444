@@ -22,6 +22,8 @@ var canvas;
 var debug = true;
 
 var destory_list = []; // 13
+var health = 100;
+var lives = 3;
 
 var b2Vec2 = Box2D.Common.Math.b2Vec2
 , b2AABB = Box2D.Collision.b2AABB
@@ -205,6 +207,23 @@ function update(connections) {
     }
 
     destroy_list.length = 0;
+   /* 
+    pX = user.GetBody().GetWorldCenter().x*30;
+    pY = user.GetBody().GetWorldCenter().y*30;
+    posX.push(pX);
+    posY.push(pY);
+    
+    var length = posX.length;
+    
+    var sX = (posX[length-1]-posX[length-2]);
+    var sY = (posY[length-1]-posY[length-2]);
+    if(pX > 275 && pX < 750){
+    context.translate(-sX, 0);
+    }
+    if (pY > 275 && pY < 750){
+    context.translate(0, -sY);
+    }
+    */
     //console.log(drawDOMObjects().length);
     io.sockets.emit('css', drawDOMObjects());
     world.ClearForces();
@@ -220,16 +239,16 @@ function init(connections) {
     //console.log(connections);
 /* Start 3 */
 createDOMObjects(100, 100, size/2, size/2, false, connections[0].id, 0);
-createDOMObjects(151, 100, size/2, size/2, false, connections[1].id, 0);
-//createDOMObjects(100, 900, size/2, size/2, false, connections[2].id, 0);
-//createDOMObjects(900, 900, size/2, size/2, false, connections[3].id, 0);
+createDOMObjects(900, 100, size/2, size/2, false, connections[1].id, 0);
+createDOMObjects(100, 900, size/2, size/2, false, connections[2].id, 0);
+createDOMObjects(900, 900, size/2, size/2, false, connections[3].id, 0);
 /* End 3 */
 
 
-createBox(0, 0, w, 1, true);
-createBox(0, h, w, 1, true);
-createBox(0, 0, 1, h, true);
-createBox(w, 0, 1, h, true);
+createBox(0, 0, w, 1, true); //Suround
+createBox(0, h, w, 1, true); //Suround
+createBox(0, 0, 1, h, true); //Suround
+createBox(w, 0, 1, h, true); //Suround
 
 /*wallSetup(8, 220, 8, 220, true, "wall");  //1 left top 
 wallSetup(220, 8, 220, 8, true, "wall");   //2 top left 
@@ -253,6 +272,8 @@ wallSetup(568, 884, 8, 100, true, "wall"); //19
 wallSetup(220, 992, 220, 8, true, "wall");   //20
 wallSetup(780, 992, 220, 8, true, "wall"); //21 */
 
+
+// internal walls
 createDOMObjects(8, 8, 8, 450, false, "wall");  //1 left top 
 createDOMObjects(16, 8, 450, 8, false, "wall");   //2 top left 
 createDOMObjects(550, 8, 450, 8, false, "wall");   //3 
@@ -280,6 +301,8 @@ createDOMObjects(550, 992, 450, 8, false, "wall"); //21
         update(connections);
     }, 1000/fps);
     getBody(connections); //See 10
+    
+
     /*Start 11*/
     var listener = new Box2D.Dynamics.b2ContactListener;
     listener.BeginContact = function(contact) {
@@ -305,6 +328,19 @@ createDOMObjects(550, 992, 450, 8, false, "wall"); //21
                 destroy_list.push(contact.GetFixtureB().GetBody())
             }
         }
+        if ((AA != null && BB != null)) {
+            console.log("2A", AA.domObj.id, + " - " + "B", BA)
+            console.log("3A", AA.domObj.id,  + " - " + "B", BA.domObj.id)
+            if (AA.domObj.id == "bullet" && BB.id == "bullet") {
+         //   console.log("3A", contact.GetFixtureA().m_userData + " - " + "B", contact.GetFixtureB().m_userData)
+                destroy_list.push(contact.GetFixtureA().GetBody());
+            }
+        } else if ((BA != null && AB != null)) {
+            if (BA.domObj.id == "bullet" && AB.id == "bullet") {
+              //  console.log(AB + " - " + BB)
+                destroy_list.push(contact.GetFixtureB().GetBody())
+            }
+        }
         if ((AA != null && BA != null)) {
             if (AA.domObj.id == "bullet"  && BA.domObj.id == this.id) {
                 console.log("playerById(this.id))", playerById(this.id))
@@ -313,8 +349,15 @@ createDOMObjects(550, 992, 450, 8, false, "wall"); //21
             }
         } else if ((BA != null && AA != null)) {
             if (BA.domObj.id == "bullet" && AA.domObj.id == this.id ) {
-                //console.log("Destroy");
-                destroy_list.push(contact.GetFixtureB().GetBody())
+                health --;
+            if (health == 0) {
+                lives --;
+                destroy_list.push(contact.GetFixtureB().GetBody());
+                location.reload();
+                if (lives == 0){
+                alert( username, "\nYou are dead, \nGame Over");
+                }
+            }
             }
         }
     }
@@ -360,7 +403,7 @@ http.listen(8000, function() {
         /* End 1  */
         /* Start 2 */
         io.sockets.emit('player_signup', {no_of_players: connections.length});
-        if (connections.length == 2) {
+        if (connections.length == 4) {
             init(connections);
         }
         /* End 2 */
