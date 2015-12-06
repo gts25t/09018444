@@ -310,51 +310,54 @@ createDOMObjects(550, 992, 450, 8, false, "wall"); //21
         BA = contact.GetFixtureB().m_userData
         AB = contact.GetFixtureA().GetBody().GetUserData();
         BB = contact.GetFixtureB().GetBody().GetUserData();
-        
-        //console.log("A", contact.GetFixtureA().m_userData)
-       // console.log("B", contact.GetFixtureB().m_userData)
-            //        console.log("1AA", AA.domObj.id)
-            //        console.log("BB", BB, contact.GetFixtureB().m_userData)
+ 
+                console.log("1AA", contact.GetFixtureA().m_userData)
+                   console.log("1BB", BB, contact.GetFixtureB().m_userData)
         if ((AA != null && BB != null)) {
-            console.log("2A", AA.domObj.id, + " - " + "B", BA)
-            console.log("3A", AA.domObj.id,  + " - " + "B", BA.domObj.id)
+            console.log("1a", AA.domObj.id, + " - " + "B", BA)
+            console.log("1b", AA.domObj.id,  + " - " + "B", BA.domObj.id)
             if (AA.domObj.id == "bullet" && BB.id == "boundary") {
-         //   console.log("3A", contact.GetFixtureA().m_userData + " - " + "B", contact.GetFixtureB().m_userData)
+            console.log("1c", contact.GetFixtureA().m_userData + " - " + "B", contact.GetFixtureB().m_userData)
                 destroy_list.push(contact.GetFixtureA().GetBody());
             }
         } else if ((BA != null && AB != null)) {
             if (BA.domObj.id == "bullet" && AB.id == "boundary") {
-              //  console.log(AB + " - " + BB)
+                console.log(AB + " - " + BB)
                 destroy_list.push(contact.GetFixtureB().GetBody())
             }
         }
         if ((AA != null && BB != null)) {
-            console.log("2A", AA.domObj.id, + " - " + "B", BA)
-            console.log("3A", AA.domObj.id,  + " - " + "B", BA.domObj.id)
+            console.log("2a", AA.domObj.id, + " - " + "B", BA)
+            console.log("2b", AA.domObj.id,  + " - " + "B", BA.domObj.id)
             if (AA.domObj.id == "bullet" && BB.id == "bullet") {
-         //   console.log("3A", contact.GetFixtureA().m_userData + " - " + "B", contact.GetFixtureB().m_userData)
+            console.log("2c", contact.GetFixtureA().m_userData + " - " + "B", contact.GetFixtureB().m_userData)
                 destroy_list.push(contact.GetFixtureA().GetBody());
             }
         } else if ((BA != null && AB != null)) {
             if (BA.domObj.id == "bullet" && AB.id == "bullet") {
-              //  console.log(AB + " - " + BB)
+                console.log("3a", AB + " - " + BB)
                 destroy_list.push(contact.GetFixtureB().GetBody())
             }
         }
         if ((AA != null && BA != null)) {
             if (AA.domObj.id == "bullet"  && BA.domObj.id == this.id) {
-                console.log("playerById(this.id))", playerById(this.id))
-          //      console.log("this.id", this.id)
+                console.log("4a playerById(this.id))", playerById(this.id))
+                console.log("4b this.id", this.id)
                 destroy_list.push(contact.GetFixtureA().GetBody());
             }
         } else if ((BA != null && AA != null)) {
             if (BA.domObj.id == "bullet" && AA.domObj.id == this.id ) {
                 health --;
+                 console.log("5a playerById(this.id))", playerById(this.id))
+                console.log("5b this.id", this.id)
             if (health == 0) {
                 lives --;
+                console.log("5c lives", lives);
+                console.log("5d health", health);
                 destroy_list.push(contact.GetFixtureB().GetBody());
                 location.reload();
                 if (lives == 0){
+                console.log("5e lives", lives);
                 alert( username, "\nYou are dead, \nGame Over");
                 }
             }
@@ -387,6 +390,7 @@ http.listen(8000, function() {
   // Sets username
     function setUsername () {
         username = cleanInput(usernameInput.val().trim());
+        console.log("1 Username", username);
 
         // username valid
         if (username) {
@@ -395,6 +399,7 @@ http.listen(8000, function() {
             $loginPage.off('click');
 
         socket.emit('add user', username);
+        console.log("2 Add Username", username);
     }
   }    
         connections.push(socket);
