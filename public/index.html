@@ -49,8 +49,8 @@
 		});
 
 		socket.on('player_signup', function (data) {
-			if (data.no_of_players < 2) {
-				players = (2-data.no_of_players);
+			if (data.no_of_players < 4) {
+				players = (4-data.no_of_players);
 				$('#splash').append('<h3>We need ' + players + ' more player</h3>');
 			} else {
 				$('#splash').hide();

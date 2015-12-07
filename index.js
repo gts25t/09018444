@@ -207,9 +207,9 @@ function update(connections) {
     }
 
     destroy_list.length = 0;
-   /* 
-    pX = user.GetBody().GetWorldCenter().x*30;
-    pY = user.GetBody().GetWorldCenter().y*30;
+   /*
+    pX =  bodies[this.id].GetBody().GetWorldCenter().x*30;
+    pY =  bodies[this.id].GetBody().GetWorldCenter().y*30;
     posX.push(pX);
     posY.push(pY);
     
@@ -245,10 +245,10 @@ createDOMObjects(900, 900, size/2, size/2, false, connections[3].id, 0);
 /* End 3 */
 
 
-createBox(0, 0, w, 1, true); //Suround
-createBox(0, h, w, 1, true); //Suround
-createBox(0, 0, 1, h, true); //Suround
-createBox(w, 0, 1, h, true); //Suround
+createBox(0, 0, w, 4, true); //Suround
+createBox(0, h, w, 4, true); //Suround
+createBox(0, 0, 4, h, true); //Suround
+createBox(w, 0, 4, h, true); //Suround
 
 /*wallSetup(8, 220, 8, 220, true, "wall");  //1 left top 
 wallSetup(220, 8, 220, 8, true, "wall");   //2 top left 
@@ -311,25 +311,87 @@ createDOMObjects(550, 992, 450, 8, false, "wall"); //21
 		BA = contact.GetFixtureB().m_userData
 		AB = contact.GetFixtureA().GetBody().GetUserData();
 		BB = contact.GetFixtureB().GetBody().GetUserData();
-		if ((AA != null && BB != null)) {
-			if (AA.domObj.id == "bullet" && BB.id == "boundary") {
-				//console.log("Destroy")
+        
+        console.log('AA =', contact.GetFixtureA().m_userData);
+		console.log('BA =', contact.GetFixtureB().m_userData);
+		console.log('AB =', contact.GetFixtureA().GetBody().GetUserData())
+		console.log('BB =', contact.GetFixtureB().GetBody().GetUserData());
+        
+    /*    if(AA != null && BA != null){
+            console.log('1a', AA.domObj.id, + '  ' + BA.domObj.id);
+            if ((AA.domObj.id == "bullet" && BA.domObj.id == "boundary")||(AA.domObj.id == "bullet" && BA.domObj.id == "bullet")||(AA.domObj.id == "bullet" && BA.domObj.id == this.id)){
+                
+            console.log('1b', AA.domObj.id, + '  ' + BA.domObj.id);
+                destroy_list.push(contact.GetFixtureA().GetBody());
+            }
+            else if ((AB.domObj.id == "bullet" && BB.domObj.id == "boundary")||(AB.domObj.id == "bullet" && BB.domObj.id == "bullet")||(AB.domObj.id == "bullet" && BB.domObj.id == this.id)) {
+                                
+            console.log('1b', AB.domObj.id, + '  ' + BB.domObj.id);
+                destroy_list.push(contact.GetFixtureB().GetBody());
+            }
+        */
+		if (AA != null && BA != null) {
+				console.log('1a', AA.domObj.id, + ' - ' + BA.domObj.id);
+			if (AA.domObj.id == "bullet" && BA.id == "boundary") {
+				console.log('1aa', AA.domObj.id, + ' - ' + BA.domObj.id);
+				console.log("a1 Destroy")
 				destroy_list.push(contact.GetFixtureA().GetBody());
-			} else if (AA.domObj.id == "bullet" && BB.id == "bullet") {
-				//console.log("Destroy")
+			} else if (AA.domObj.id == "bullet" && BA.domObj.id == "bullet") {
+				console.log("a2 Destroy")
 				destroy_list.push(contact.GetFixtureA().GetBody());
-			} else if (AA.domObj.id == "bullet" && BB.id == this.id) {
-				//console.log("Destroy")
+			} else if (AA.domObj.id == "bullet" && BA.domObj.id == playerById(this.id)) {
+				console.log("a3 Destroy")
+				destroy_list.push(contact.GetFixtureA().GetBody());
+			}  
+        }
+        if (BA != null && AA != null) {
+                console.log('1b', BA.domObj.id, + ' - ' + AA.domObj.id);
+            if (BA.domObj.id == "bullet" && AA.domObj.id == "boundary") {
+				console.log('1bb', BA.domObj.id, + ' - ' + BA.domObj.id);
+				console.log("b1 boundary Destroy")
+				destroy_list.push(contact.GetFixtureA().GetBody());
+			} else if (BA.domObj.id == "bullet" && AA.domObj.id == "bullet") {
+				console.log("b2 bullet Destroy")
+				destroy_list.push(contact.GetFixtureA().GetBody());
+			} else if (BA.domObj.id == "bullet" && AA.domObj.id == playerById(this.id)) {
+				console.log("b3 player Destroy")
 				destroy_list.push(contact.GetFixtureA().GetBody());
 			}
-		} else if ((BA != null && AB != null)) {
-			if (BA.domObj.id == "bullet" && AB.id == "boundary") {
+		}
+        if (AB != null && BB != null) {
+                console.log('2a', AB.id == "bullet" && BB.id == "boundary");
+			if (AB.id == "bullet" && BB.id == "boundary") {
+				console.log('2aa', AB.id == "bullet" && BB.id == "boundary");
+				destroy_list.push(contact.GetFixtureB().GetBody())
+			} else if (AB.id == "bullet" && BB.id == "bullet") {
 				//console.log("Destroy");
 				destroy_list.push(contact.GetFixtureB().GetBody())
-			} else if (BA.domObj.id == "bullet" && AB.id == "bullet") {
+			} else if (AB.id == "bullet" && BB.id == this.domObj.id) {
+				health --;
+                console.log("5a playerById(this.id))", playerById(this.id));
+                console.log("5b this.id", this.domObj.id);
+                if (health == 0) {
+                    lives --;
+                    console.log("5c lives", lives);
+                    console.log("5d health", health);
+                    destroy_list.push(contact.GetFixtureB().GetBody());
+                    location.reload();
+                    if (lives == 0){
+                        console.log("5e lives", lives);
+                        alert( username, "\nYou are dead, \nGame Over");
+                    }
+                }  
+            }
+        }
+        if (BB != null && AB != null) {
+                console.log('2bb', BB.id == "bullet" && AB.id == "boundary");
+            if (BB.id == "bullet" && AB.id == "boundary") {
+				console.log('2bb', BB.id == "bullet" && AB.id == "boundary");
+				destroy_list.push(contact.GetFixtureB().GetBody())
+			} else if (BB.id == "bullet" && AB.id == "bullet") {
 				//console.log("Destroy");
 				destroy_list.push(contact.GetFixtureB().GetBody())
-			} else if (BA.domObj.id == "bullet" && AB.id == this.id) {
+			} else if (BB.id == "bullet" && AB.id == this.id) {
 				health --;
                 console.log("5a playerById(this.id))", playerById(this.id));
                 console.log("5b this.id", this.id);
@@ -344,7 +406,7 @@ createDOMObjects(550, 992, 450, 8, false, "wall"); //21
                         alert( username, "\nYou are dead, \nGame Over");
                     }
                 }  
-            }
+            } 
 		}
         /*
         if ((AA != null && BB != null)) {
@@ -500,6 +562,6 @@ function onMovePlayer(data) {
 /* End 9 */
 
 function spawn(x, y, angle) {
-    createDOMObjects(x, y, 10/2, 10/2, true, "bullet", angle);
+    createDOMObjects(x, y, 10, 10, true, "bullet", angle);
     //console.log('spawn =', spawn);
 }

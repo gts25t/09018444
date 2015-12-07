@@ -13,8 +13,8 @@
 	transform: translateZ(0);
 	background-color:black;
 	/*position: absolute;*/
-	width: 1500px;
-	height: 1500px;
+	width: 1000px;
+	height: 1000px;
 	/*transform: translate(-500px, -500px);*/
 }
 
@@ -22,7 +22,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-    background: red;
+    background: blue;
 }
 
 #container {
@@ -34,8 +34,8 @@
 	position: relative;
 }
 #splash {
-	width: 1500px;
-	height: 1500px;
+	width: 500px;
+	height: 500px;
 	padding: 0;
 	margin: 0;
 	position: relative;
